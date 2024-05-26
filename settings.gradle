@@ -1,0 +1,2 @@
+rootProject.name = "Latte Milk Collection"
+include ':app'

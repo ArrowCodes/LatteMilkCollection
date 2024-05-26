@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Latte Milk Collection</string>
+    <string name="route">Routes</string>
+    <string name="farmers">Farmers</string>
+    <string name="reports">Reports</string>
+    <string name="logout">Logout</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="add_routes">Add Routes</string>
+</resources>

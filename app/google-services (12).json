@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "990328717018",
+    "project_id": "latte-milk-collection",
+    "storage_bucket": "latte-milk-collection.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:990328717018:android:2b7c5b53be8b65e9666fe3",
+        "android_client_info": {
+          "package_name": "com.enlace.lattemilkcollection"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAP5c7uM7pt9RQzIf6eO3fNrLqrtc3V1F4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
