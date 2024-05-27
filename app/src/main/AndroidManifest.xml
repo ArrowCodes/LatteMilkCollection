@@ -16,6 +16,9 @@
         tools:replace="icon,label"
         tools:targetApi="m">
         <activity
+            android:name=".AddFarmersActivity"
+            android:exported="false" />
+        <activity
             android:name=".FarmersActivity"
             android:exported="false" />
         <activity

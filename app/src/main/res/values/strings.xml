@@ -10,4 +10,5 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="add_routes">Add Routes</string>
+    <string name="add_farmer">Add Farmer</string>
 </resources>
