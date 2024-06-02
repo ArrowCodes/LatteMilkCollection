@@ -2,6 +2,7 @@ package com.enlace.lattemilkcollection;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -54,6 +55,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_CLIENT_ID = "client_id";
     private static final String COLUMN_LEVEL = "level";
     private static final String COLUMN_FIRST_NAME = "firstname";
+    private static final String COLUMN_MIDDLE_NAME = "middlename";
     private static final String COLUMN_SURNAME = "surname";
     private static final String COLUMN_EMAIL = "email";
 
@@ -75,7 +77,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // SQL to create routes table
     private static final String CREATE_TABLE_ROUTES = "CREATE TABLE " + TABLE_ROUTES + " (" +
             COLUMN_ROUTE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            COLUMN_ROUTE_NAME + " TEXT, " +
+            COLUMN_ROUTE_NAME + " TEXT UNIQUE, " +
             COLUMN_ROUTE_SYNC_KEY + " TEXT UNIQUE, " +
             COLUMN_ROUTE_USERNAME + " TEXT" + ")";
 
@@ -99,6 +101,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             COLUMN_CLIENT_ID + " TEXT, " +
             COLUMN_LEVEL + " TEXT, " +
             COLUMN_FIRST_NAME + " TEXT, " +
+            COLUMN_MIDDLE_NAME + " TEXT, " +
             COLUMN_SURNAME + " TEXT, " +
             COLUMN_EMAIL + " TEXT" + ")";
 
@@ -135,10 +138,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.insertWithOnConflict("farmers", null, values, SQLiteDatabase.CONFLICT_IGNORE);
     }
 
-    public long insertRoutes(String route_name, String user_name) {
+    public long insertRoutes(String route_name, String sync_key,String user_name) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("route_name", route_name);
+        values.put("sync_key", sync_key);
         values.put("user_name", user_name);
         return db.insertWithOnConflict("routes", null, values, SQLiteDatabase.CONFLICT_IGNORE);
     }
@@ -154,6 +158,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("sys_time", sys_time);
         return db.insertWithOnConflict("sales", null, values, SQLiteDatabase.CONFLICT_IGNORE);
     }
+
+    public boolean loginUser(String user_name, String user_code, Context context, Class<?> targetActivity) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {"user_name", "firstname", "middlename", "surname"};
+        String selection = "user_name=? AND user_code=?";
+        String[] selectionArgs = {user_name, user_code};
+
+        Cursor cursor = db.query("users_client", columns, selection, selectionArgs, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            String fetchedUserName = cursor.getString(cursor.getColumnIndexOrThrow("user_name"));
+            String fetchedFirstname = cursor.getString(cursor.getColumnIndexOrThrow("firstname"));
+            String fetchedMiddlename = cursor.getString(cursor.getColumnIndexOrThrow("middlename"));
+            String fetchedSurname = cursor.getString(cursor.getColumnIndexOrThrow("surname"));
+
+            // Store details in SharedPreferences
+            SharedPrefManager.getInstance(context).userLogin(fetchedUserName, fetchedFirstname, fetchedMiddlename, fetchedSurname);
+            cursor.close();
+
+            // Start the next activity
+           /* Intent intent = new Intent(context, targetActivity);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);*/
+
+            return true;  // Login successful
+        } else {
+            if (cursor != null) {
+                cursor.close();
+            }
+            return false;  // Login failed
+        }
+    }
+
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -18,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private TextView name, email;
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,9 +39,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
         View header = navigationView.getHeaderView(0);
         name = (TextView) header.findViewById(R.id.header_title);
-        name.setText("Latte");
+        name.setText(SharedPrefManager.getInstance(getApplicationContext()).getKeyUserFname()+" "+SharedPrefManager.getInstance(getApplicationContext()).getKeyUserLname());
         email = header.findViewById(R.id.sub_title);
-        email.setText("info@latte.com");
+        email.setText(SharedPrefManager.getInstance(getApplicationContext()).getKeyUserName());
     }
 
     @Override

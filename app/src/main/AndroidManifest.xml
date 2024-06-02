@@ -24,7 +24,9 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
         <activity
             android:name=".AddFarmersActivity"
             android:exported="false" />
@@ -37,7 +39,7 @@
         <activity
             android:name=".LoadingActivity"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar">
+           >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

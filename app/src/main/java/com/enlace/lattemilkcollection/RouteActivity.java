@@ -1,5 +1,7 @@
 package com.enlace.lattemilkcollection;
 
+import static com.enlace.lattemilkcollection.UUIDGenerator.generate12CharUUID;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,6 +42,7 @@ public class RouteActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RouteListAdapter routeListAdapter;
     private List<RouteList> listItems;
+    private DatabaseHelper dbHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +50,8 @@ public class RouteActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Routes");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         progressbar = findViewById(R.id.progressbar);
+        //initialize databases
+        dbHelper = new DatabaseHelper(this);
         //Reyclerview initiate
         listItems= new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerView);
@@ -75,7 +80,7 @@ public class RouteActivity extends AppCompatActivity {
                             public void onClick(SweetAlertDialog sDialog) {
                                 // Handle confirm button click
                                 String inputText = editText.getText().toString().toUpperCase();
-                                add_route(inputText);
+                                post_route(inputText);
                                 // Do something with the input text
                                 sDialog.dismissWithAnimation();
                             }
@@ -91,7 +96,17 @@ public class RouteActivity extends AppCompatActivity {
             }
         });
     }
-    private void add_route(final String route)
+
+    private void post_route(final String route)
+    {
+        // Generate a 12-character UUID
+        String sync_key = generate12CharUUID();
+        String user_name = SharedPrefManager.getInstance(getApplicationContext()).getKeyUserName();
+        dbHelper.insertRoutes(route,sync_key,user_name);
+        Toasty.success(getApplicationContext(),"Route saved successfully",Toast.LENGTH_LONG,true).show();
+        add_route(route,sync_key,user_name);
+    }
+    private void add_route(final String route,final String sync_key,final String user_name)
     {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, RestApi.ADD_ROUTE, response -> {
             try {
@@ -122,6 +137,8 @@ public class RouteActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String>params = new HashMap<>();
                 params.put("route_name",route);
+                params.put("sync_key",sync_key);
+                params.put("user_name",user_name);
                 return params;
             }
         };
