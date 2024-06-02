@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         card_view:cardElevation="8dp"
-        android:layout_margin="1dp">
+        android:layout_margin="0dp">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
                     android:textSize="30sp"
                     android:id="@+id/imageView"
                     tools:ignore="HardcodedText"
-                    android:fontFamily="@font/sf"
+                    android:fontFamily="@font/comorant"
                     android:gravity="center_horizontal" />
 
 
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:id="@+id/route_nameTV"
-                android:fontFamily="@font/sf"
+                android:fontFamily="@font/comorant"
                 android:layout_toEndOf="@+id/relative_this"
                 android:text="Quiver Lounge"
                 android:layout_marginEnd="8dp"
@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:id="@+id/user_nameTV"
-                android:fontFamily="@font/sf"
+                android:fontFamily="@font/comorant"
                 android:layout_toEndOf="@+id/relative_this"
                 android:text="Rider:Kelvin Kagia at 16:30"
                 android:layout_marginEnd="8dp"

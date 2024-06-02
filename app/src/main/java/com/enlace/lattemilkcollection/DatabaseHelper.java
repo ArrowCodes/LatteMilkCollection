@@ -24,6 +24,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_ACCOUNT = "account";
     private static final String COLUMN_PAY_DAY = "pay_day";
     private static final String COLUMN_PNUMBER = "pnumber";
+    private static final String COLUMN_MPESA_NUMBER = "mpesa_number";
     private static final String COLUMN_ROUTE = "route";
     private static final String COLUMN_CLOUD_SYNC_KEY = "sync_key";
     private static final String COLUMN_USERNAME = "username";
@@ -69,7 +70,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             COLUMN_PAYMENT_MODE + " TEXT, " +
             COLUMN_ACCOUNT + " TEXT, " +
             COLUMN_PAY_DAY + " TEXT, " +
-            COLUMN_PNUMBER + " TEXT, " +
+            COLUMN_PNUMBER + " TEXT UNIQUE, " +
+            COLUMN_MPESA_NUMBER + " TEXT UNIQUE, " +
             COLUMN_ROUTE + " TEXT, " +
             COLUMN_CLOUD_SYNC_KEY + " TEXT UNIQUE, " +
             COLUMN_USERNAME + " TEXT" + ")";
@@ -121,7 +123,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public long insertFarmers(String farmer_name, String farmer_lat,String farmer_lng,String rate_per_litre,String payment_mode,String account,String pay_day,String pnumber,String route,String user_name) {
+    public long insertFarmers(String farmer_name, String farmer_lat,String farmer_lng,String rate_per_litre,String payment_mode,String account,String pay_day,String pnumber,String mpesa_number,String route,String user_name) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("farmer_name", farmer_name);
@@ -133,6 +135,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("account", account);
         values.put("pay_day",pay_day);
         values.put("pnumber",pnumber);
+        values.put("mpesa_number",mpesa_number);
         values.put("route",route);
         values.put("user_name",user_name);
         return db.insertWithOnConflict("farmers", null, values, SQLiteDatabase.CONFLICT_IGNORE);

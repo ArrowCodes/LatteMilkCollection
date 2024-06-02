@@ -10,91 +10,187 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginStart="15dp"
         >
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp">
+
+        <!-- First Name Label and EditText -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                tools:ignore="HardcodedText" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sf"
+                android:hint="Name"
+                android:textColor="@color/black"
+                android:textColorHint="@color/light_grey"
+                android:textSize="14sp"
+                android:id="@+id/nameT"
+                android:background="@drawable/edit_text_background"
+                android:padding="10dp"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+
+        <!-- Last Name Label and EditText -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phone No"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                tools:ignore="HardcodedText" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sf"
+                android:hint="254#########"
+                android:textColor="@color/black"
+                android:textColorHint="@color/light_grey"
+                android:textSize="14sp"
+                android:id="@+id/pnumberT"
+                android:inputType="number"
+                android:maxLength="12"
+                android:background="@drawable/edit_text_background"
+                android:padding="10dp"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp">
+
+            <!-- First Name Label and EditText -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rate Per Litre"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    tools:ignore="HardcodedText" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sf"
+                    android:hint="Rate Per Litre"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/light_grey"
+                    android:textSize="14sp"
+                    android:inputType="number"
+                    android:id="@+id/rate_per_litreT"
+                    android:background="@drawable/edit_text_background"
+                    android:padding="10dp"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
+
+            <!-- Last Name Label and EditText -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="5dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Route"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    tools:ignore="HardcodedText" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sf"
+                    android:hint="Route"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/light_grey"
+                    android:textSize="14sp"
+                    android:id="@+id/mpesa_numberT"
+                    android:inputType="text"
+                    android:maxLength="12"
+                    android:background="@drawable/edit_text_background"
+                    android:padding="10dp"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
+        </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
+            android:text="Payment Mode"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"
+            android:layout_marginTop="10dp"
             android:textColor="@color/black"
-            android:text="@string/add_farmer"
-            android:textSize="18sp"
-            android:fontFamily="@font/sf"
-            android:layout_marginTop="40dp"
-            android:layout_gravity="center"
-            />
-
-        <LinearLayout
-            android:layout_width="match_parent"
+            tools:ignore="HardcodedText" />
+        <RadioGroup
+            android:id="@+id/radioGroupPaymentMode"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/person_add_black"
-                />
+            android:orientation="horizontal">
 
-            <EditText
-                android:layout_width="300dp"
+            <RadioButton
+                android:id="@+id/radioCash"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Name"
-                android:fontFamily="@font/sf"
-                android:textColor="@color/colorPrimary"
-                />
+                android:text="Cash"
+                android:textSize="13sp"
+                tools:ignore="HardcodedText" />
 
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/scale_black"
-                />
-
-            <EditText
-                android:layout_width="300dp"
+            <RadioButton
+                android:id="@+id/radioMpesa"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Rate Per Litre"
-                android:fontFamily="@font/sf"
-                android:inputType="number"
-                android:textColor="@color/colorPrimary"
-                />
+                android:textSize="13sp"
+                android:text="Mpesa"
+                tools:ignore="HardcodedText" />
 
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/calendar_black"
-                />
-
-            <EditText
-                android:layout_width="300dp"
+            <RadioButton
+                android:id="@+id/radioBank"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Pay Day"
-                android:fontFamily="@font/sf"
-                android:inputType="text"
-                android:textColor="@color/colorPrimary"
-                />
-
-
-        </LinearLayout>
-
+                android:textSize="13sp"
+                android:text="Bank"
+                tools:ignore="HardcodedText" />
+        </RadioGroup>
     </LinearLayout>
-
 </ScrollView>

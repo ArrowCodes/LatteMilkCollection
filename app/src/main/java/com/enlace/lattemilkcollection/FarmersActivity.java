@@ -10,19 +10,24 @@ import android.view.View;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class FarmersActivity extends AppCompatActivity {
-   FloatingActionButton fab;
+    FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_farmers);
         getSupportActionBar().setTitle("Farmers");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //initializa fab
+        //initialize floating action button
         fab = findViewById(R.id.fab);
-        fab.setOnClickListener(view -> {
-            Intent i = new Intent(getApplicationContext(),AddFarmersActivity.class);
-            startActivity(i);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),AddFarmersActivity.class);
+                startActivity(i);
+                finish();
+            }
         });
+
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
