@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Latte");
+        toolbar.setTitle("Sales Today");
         setSupportActionBar(toolbar);
 
         //initialize views
@@ -139,35 +139,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 salesListAdapter= new SalesListAdapter(listItems,getApplicationContext());
                 recyclerView.setAdapter(salesListAdapter);
-                salesListAdapter.setmOnMenuClickListener(new SalesListAdapter.OnMenuClickListener() {
-                    @Override
-                    public void OnClickMenu(View view, int position) {
-                        new SweetAlertDialog(MainActivity.this, SweetAlertDialog.WARNING_TYPE)
-                                .setTitleText("Are you sure?")
-                                .setContentText("Are you sure you want to delete this sale?")
-                                .setConfirmText("Yes, delete it!")
-                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                    @Override
-                                    public void onClick(SweetAlertDialog sDialog) {
-                                        sDialog
-                                                .setTitleText("Deleted!")
-                                                .setContentText("Your file has been deleted!")
-                                                .setConfirmText("OK")
-                                                .setConfirmClickListener(null)
-                                                .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
-                                        // Handle the confirmed action here
-                                        delete_sale(listItems.get(position).getId());
-                                    }
-                                })
-                                .setCancelButton("Cancel", new SweetAlertDialog.OnSweetClickListener() {
-                                    @Override
-                                    public void onClick(SweetAlertDialog sDialog) {
-                                        sDialog.dismissWithAnimation();
-                                    }
-                                })
-                                .show();
-                    }
-                });
+                salesListAdapter.setmOnMenuClickListener((view, position) -> new SweetAlertDialog(MainActivity.this, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Are you sure?")
+                        .setContentText("Are you sure you want to delete this sale?")
+                        .setConfirmText("Yes, delete it!")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                sDialog
+                                        .setTitleText("Deleted!")
+                                        .setContentText("Your file has been deleted!")
+                                        .setConfirmText("OK")
+                                        .setConfirmClickListener(null)
+                                        .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                                // Handle the confirmed action here
+                                delete_sale(listItems.get(position).getId());
+                            }
+                        })
+                        .setCancelButton("Cancel", new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                sDialog.dismissWithAnimation();
+                            }
+                        })
+                        .show());
 
             } catch (JSONException e) {
                 throw new RuntimeException(e);
