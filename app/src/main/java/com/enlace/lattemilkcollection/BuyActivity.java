@@ -224,6 +224,7 @@ public class BuyActivity extends AppCompatActivity {
                 params.put("amount_to_pay",amount_to_pay);
                 params.put("sys_date",sysDate);
                 params.put("sys_time",sysTime);
+                params.put("username",SharedPrefManager.getInstance(getApplicationContext()).getKeyUserName());
                 return params;
             }
         };

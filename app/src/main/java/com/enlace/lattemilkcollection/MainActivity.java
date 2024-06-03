@@ -3,6 +3,7 @@ package com.enlace.lattemilkcollection;
 import static com.example.easywaylocation.EasyWayLocation.LOCATION_SETTING_REQUEST_CODE;
 import android.Manifest;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -21,6 +22,11 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.example.easywaylocation.EasyWayLocation;
 import com.example.easywaylocation.Listener;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -30,12 +36,20 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private TextView name, email;
     EasyWayLocation easyWayLocation;
     private static final int REQUEST_LOCATION_PERMISSION_CODE = 1;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private String lat,lng;
+    private TextView greetings_tv,amount_tv,litres_tv;
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +59,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Latte");
         setSupportActionBar(toolbar);
+
+        //initialize views
+        greetings_tv = findViewById(R.id.greetings_tv);
+        amount_tv = findViewById(R.id.amount_tv);
+        litres_tv = findViewById(R.id.litres_tv);
+        //greetings
+        Calendar c = Calendar.getInstance();
+        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
+        if(timeOfDay >= 0 && timeOfDay < 12){
+            greetings_tv.setText("GOOD MORNING,"+SharedPrefManager.getInstance(getApplicationContext()).getKeyUserFname());
+        }else if(timeOfDay >= 12 && timeOfDay < 16){
+            greetings_tv.setText("GOOD AFTERNOON,"+SharedPrefManager.getInstance(getApplicationContext()).getKeyUserFname());
+        }else if(timeOfDay >= 16 && timeOfDay < 21){
+            greetings_tv.setText("GOOD EVENING,"+SharedPrefManager.getInstance(getApplicationContext()).getKeyUserFname());
+        }else if(timeOfDay >= 21 && timeOfDay < 24){
+            greetings_tv.setText("BLESSED NIGHT,"+SharedPrefManager.getInstance(getApplicationContext()).getKeyUserFname());
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -68,6 +99,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             getLastLocation();
         }
+        summary();
+    }
+
+    private void summary()
+    {
+        Calendar calendar = Calendar.getInstance();
+        GetTimeData getTimeData = new GetTimeData(calendar);
+        final String text_date = getTimeData.getTextDate();
+        final String sysTime = getTimeData.getHour();
+        final String sysDate = getTimeData.getSysDate();
+        @SuppressLint("SetTextI18n") StringRequest stringRequest = new StringRequest(Request.Method.POST, RestApi.SUMMARY, response -> {
+            try {
+                JSONObject obj = new JSONObject(response);
+                amount_tv.setText("Collection(Kshs):"+obj.getString("amount_payable"));
+                litres_tv.setText("Collection(Litres):"+obj.getString("litres"));
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String>params = new HashMap<>();
+                params.put("username",SharedPrefManager.getInstance(getApplicationContext()).getKeyUserName());
+                params.put("sys_date",sysDate);
+                return params;
+            }
+        };
+        RequestHandler.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
     }
     @SuppressLint("MissingPermission")
     private void getLastLocation() {
