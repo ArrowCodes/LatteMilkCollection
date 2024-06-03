@@ -5,4 +5,6 @@ public class RestApi {
     public static final String ADD_ROUTE = ROOT_URL+"add_route";
     public static final String GET_ROUTES = ROOT_URL+"get_routes";
     public static final String GET_USERS_CLIENT = ROOT_URL+"get_users_client";
+    public static final String SAVE_FARMER = ROOT_URL+"save_farmer";
+    public static final String LOAD_FARMERS = ROOT_URL+"load_farmers";
 }

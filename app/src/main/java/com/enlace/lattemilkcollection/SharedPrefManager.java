@@ -19,6 +19,8 @@ public class SharedPrefManager {
     private static final String TAG_COHORT_ID = "cohort_id";
     private static final String TAG_COHORT_NAME = "cohort_name";
     private static final String TAG_REF_NO = "ref_no";
+    private static final String TAG_LAT = "tagtoken45";
+    private static final String TAG_LNG = "tagtoken48";
     private RequestQueue requestQueue;
 
 
@@ -217,5 +219,33 @@ public class SharedPrefManager {
     public String getRefNo(){
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return  sharedPreferences.getString(TAG_REF_NO, null);
+    }
+
+    //this method will save the device token to shared preferences
+    public boolean saveDeviceLatitude(String lat){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(TAG_LAT, lat);
+        editor.apply();
+        return true;
+    }
+    //this method will fetch the device token from shared preferences
+    public String getDeviceLat(){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return  sharedPreferences.getString(TAG_LAT, null);
+    }
+
+
+    public boolean saveDeviceLng(String lng){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(TAG_LNG, lng);
+        editor.apply();
+        return true;
+    }
+    //this method will fetch the device token from shared preferences
+    public String getDeviceLng(){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return  sharedPreferences.getString(TAG_LNG, null);
     }
 }

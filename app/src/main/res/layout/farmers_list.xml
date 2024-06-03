@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linearLayout"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardElevation="8dp"
+        android:layout_margin="0dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/relative_this"
+                >
+
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/circle_shape"
+                    android:text="Q"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="30sp"
+                    android:id="@+id/imageView"
+                    tools:ignore="HardcodedText"
+                    android:fontFamily="@font/comorant"
+                    android:gravity="center_horizontal" />
+
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:id="@+id/nameTV"
+                android:fontFamily="@font/comorant"
+                android:layout_toEndOf="@+id/relative_this"
+                android:text="Quiver Lounge"
+                android:layout_marginEnd="8dp"
+                android:textSize="15sp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:id="@+id/pnumberTV"
+                android:fontFamily="@font/comorant"
+                android:layout_toEndOf="@+id/relative_this"
+                android:text="Rider:Kelvin Kagia at 16:30"
+                android:layout_marginEnd="8dp"
+                android:textSize="14sp"
+                android:layout_marginTop="3dp"
+                android:layout_below="@+id/nameTV"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:id="@+id/user_nameTV"
+                android:fontFamily="@font/comorant"
+                android:layout_toEndOf="@+id/relative_this"
+                android:text="Rider:Kelvin Kagia at 16:30"
+                android:layout_marginEnd="8dp"
+                android:textSize="14sp"
+                android:layout_marginTop="3dp"
+                android:layout_below="@+id/pnumberTV"
+                tools:ignore="HardcodedText" />
+
+
+
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

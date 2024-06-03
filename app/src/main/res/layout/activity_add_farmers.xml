@@ -145,7 +145,7 @@
                     android:textColor="@color/black"
                     android:textColorHint="@color/light_grey"
                     android:textSize="14sp"
-                    android:id="@+id/mpesa_numberT"
+                    android:id="@+id/routeT"
                     android:inputType="text"
                     android:maxLength="12"
                     android:background="@drawable/edit_text_background"
@@ -153,6 +153,63 @@
                     tools:ignore="HardcodedText" />
             </LinearLayout>
         </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Account No"
+            android:textSize="14sp"
+            android:id="@+id/account_numberTV"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/black"
+            tools:ignore="HardcodedText" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sf"
+            android:hint="Account Number"
+            android:textColor="@color/black"
+            android:textColorHint="@color/light_grey"
+            android:textSize="14sp"
+            android:id="@+id/account_numberT"
+            android:inputType="text"
+            android:background="@drawable/edit_text_background"
+            android:padding="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            tools:ignore="HardcodedText" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mpesa No"
+            android:textSize="14sp"
+            android:id="@+id/mpesa_numberTV"
+            android:textColor="@color/black"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            tools:ignore="HardcodedText" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sf"
+            android:hint="Mpesa Number"
+            android:textColor="@color/black"
+            android:textColorHint="@color/light_grey"
+            android:textSize="14sp"
+            android:id="@+id/mpesa_numberT"
+            android:inputType="number"
+            android:maxLength="12"
+            android:background="@drawable/edit_text_background"
+            android:padding="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            tools:ignore="HardcodedText" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -192,5 +249,46 @@
                 android:text="Bank"
                 tools:ignore="HardcodedText" />
         </RadioGroup>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pay Day"
+            android:textSize="14sp"
+            android:id="@+id/pay_dayTV"
+            android:textColor="@color/black"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            tools:ignore="HardcodedText" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sf"
+            android:hint="Pay Day"
+            android:textColor="@color/black"
+            android:textColorHint="@color/light_grey"
+            android:textSize="14sp"
+            android:id="@+id/pay_dayT"
+            android:inputType="text"
+            android:background="@drawable/edit_text_background"
+            android:padding="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            tools:ignore="HardcodedText" />
+
+        <com.appz.abhi.simplebutton.SimpleButton
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/saveB"
+            android:padding="16dp"
+            android:text="Save"
+            android:drawableEnd="@drawable/done_white"
+            android:layout_marginTop="35dp"
+            android:fontFamily="@font/sf"
+            app:button_background_color="@color/colorPrimary"
+            app:button_pressed_color="@color/colorPrimary"/>
     </LinearLayout>
 </ScrollView>

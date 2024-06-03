@@ -123,13 +123,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public long insertFarmers(String farmer_name, String farmer_lat,String farmer_lng,String rate_per_litre,String payment_mode,String account,String pay_day,String pnumber,String mpesa_number,String route,String user_name) {
+    public long insertFarmers(String farmer_name, String farmer_lat,String farmer_lng,String rate_per_litre,String payment_mode,String account,String pay_day,String pnumber,String mpesa_number,String route,String sync_key,String user_name) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("farmer_name", farmer_name);
-        values.put("farmer_lat", farmer_lat);
-        values.put("farmer_lng", farmer_lng);
-        values.put("farmer_lng", farmer_lng);
+        values.put("name", farmer_name);
+        values.put("lat", farmer_lat);
+        values.put("lng", farmer_lng);
         values.put("rate_per_litre", rate_per_litre);
         values.put("payment_mode", payment_mode);
         values.put("account", account);
@@ -137,7 +136,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("pnumber",pnumber);
         values.put("mpesa_number",mpesa_number);
         values.put("route",route);
-        values.put("user_name",user_name);
+        values.put("sync_key",sync_key);
+        values.put("username",user_name);
         return db.insertWithOnConflict("farmers", null, values, SQLiteDatabase.CONFLICT_IGNORE);
     }
 
