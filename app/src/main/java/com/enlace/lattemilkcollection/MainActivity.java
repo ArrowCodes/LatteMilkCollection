@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(i);
         }
         else if (id == R.id.nav_buy) {
-            Intent i = new Intent(getApplicationContext(), FarmersActivity.class);
+            Intent i = new Intent(getApplicationContext(), BuyActivity.class);
             startActivity(i);
         }
 

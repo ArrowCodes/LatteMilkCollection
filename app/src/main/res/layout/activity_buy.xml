@@ -1,9 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BuyActivity">
+    tools:context=".AddFarmersActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search and select route"
+            android:textSize="14sp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/black"
+            tools:ignore="HardcodedText" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="10dp"
+            android:gravity="center_vertical">
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/sf"
+                android:hint="Route"
+                android:textColor="@color/black"
+                android:textColorHint="@color/light_grey"
+                android:textSize="14sp"
+                android:id="@+id/routeT"
+                android:background="@drawable/edit_text_background"
+                android:padding="10dp"
+                tools:ignore="HardcodedText" />
+
+            <at.markushi.ui.CircleButton
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/search_white"
+                android:id="@+id/search_route_button"
+                app:cb_color="@color/colorPrimary"
+                app:cb_pressedRingWidth="8dip"
+                android:layout_gravity="center_vertical"
+                />
+
+        </LinearLayout>
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:layout_marginTop="20dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:scrollbars="vertical" />
+
+    </LinearLayout>
+</ScrollView>

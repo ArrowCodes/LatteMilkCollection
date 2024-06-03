@@ -68,7 +68,7 @@ public class FarmersListAdapter extends RecyclerView.Adapter<FarmersListAdapter.
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               //mOnMenuClickListener.OnClickMenu(view, holder.getAdapterPosition());
+               mOnMenuClickListener.OnClickMenu(view, holder.getAdapterPosition());
             }
         });
 
