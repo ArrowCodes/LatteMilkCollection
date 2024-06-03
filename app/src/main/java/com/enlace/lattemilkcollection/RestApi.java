@@ -11,4 +11,5 @@ public class RestApi {
     public static final String POST_COLLECTION = ROOT_URL+"post_collection";
     public static final String SUMMARY = ROOT_URL+"summary";
     public static final String SALES_BY_USERNAME = ROOT_URL+"sales_by_username";
+    public static final String DELETE_SALE = ROOT_URL+"delete_sale";
 }

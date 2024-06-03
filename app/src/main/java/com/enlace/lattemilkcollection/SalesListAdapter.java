@@ -62,7 +62,7 @@ public class SalesListAdapter extends RecyclerView.Adapter<SalesListAdapter.View
 
         holder.imageView.setText(listItem.getName().substring(0, 1).toUpperCase());
         holder.nameTV.setText(listItem.getName());
-        holder.litresTV.setText(listItem.getLitres());
+        holder.litresTV.setText("Litres:"+listItem.getLitres());
         holder.amountTV.setText("Kshs:" + listItem.getAmount_to_pay());
         //holder.fareTV.setText("Fare:KES " + listItem.getTotal_fare());
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {

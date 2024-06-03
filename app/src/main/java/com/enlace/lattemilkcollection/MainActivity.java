@@ -1,6 +1,4 @@
 package com.enlace.lattemilkcollection;
-
-import static com.example.easywaylocation.EasyWayLocation.LOCATION_SETTING_REQUEST_CODE;
 import android.Manifest;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,14 +9,17 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,12 +37,17 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private TextView name, email;
@@ -50,6 +56,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FusedLocationProviderClient fusedLocationProviderClient;
     private String lat,lng;
     private TextView greetings_tv,amount_tv,litres_tv;
+    private ProgressBar progressbar;
+    private RecyclerView recyclerView;
+    private SalesListAdapter salesListAdapter;
+    private List<SalesList> listItems;
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         greetings_tv = findViewById(R.id.greetings_tv);
         amount_tv = findViewById(R.id.amount_tv);
         litres_tv = findViewById(R.id.litres_tv);
+        progressbar = findViewById(R.id.progressbar);
         //greetings
         Calendar c = Calendar.getInstance();
         int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
@@ -76,6 +87,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }else if(timeOfDay >= 21 && timeOfDay < 24){
             greetings_tv.setText("BLESSED NIGHT,"+SharedPrefManager.getInstance(getApplicationContext()).getKeyUserFname());
         }
+
+        listItems= new ArrayList<>();
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+        recyclerView.setHasFixedSize(true);
+        loadRecyclerView();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -100,6 +117,109 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getLastLocation();
         }
         summary();
+
+    }
+
+    private void loadRecyclerView()
+    {
+
+        progressbar.setVisibility(View.VISIBLE);
+        listItems = new ArrayList<>();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, RestApi.SALES_BY_USERNAME, response -> {
+            progressbar.setVisibility(View.GONE);
+            Log.d("Request Tag",response);
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                JSONArray array = jsonObject.getJSONArray("sales");
+                for(int i=0;i<array.length();i++)
+                {
+                    JSONObject o = array.getJSONObject(i);
+                    SalesList item = new SalesList(o.getString("id"),o.getString("farmer_id"),o.getString("name"),o.getString("litres"),o.getString("amount_to_pay"));
+                    listItems.add(item);
+                }
+                salesListAdapter= new SalesListAdapter(listItems,getApplicationContext());
+                recyclerView.setAdapter(salesListAdapter);
+                salesListAdapter.setmOnMenuClickListener(new SalesListAdapter.OnMenuClickListener() {
+                    @Override
+                    public void OnClickMenu(View view, int position) {
+                        new SweetAlertDialog(MainActivity.this, SweetAlertDialog.WARNING_TYPE)
+                                .setTitleText("Are you sure?")
+                                .setContentText("Are you sure you want to delete this sale?")
+                                .setConfirmText("Yes, delete it!")
+                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                    @Override
+                                    public void onClick(SweetAlertDialog sDialog) {
+                                        sDialog
+                                                .setTitleText("Deleted!")
+                                                .setContentText("Your file has been deleted!")
+                                                .setConfirmText("OK")
+                                                .setConfirmClickListener(null)
+                                                .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                                        // Handle the confirmed action here
+                                        delete_sale(listItems.get(position).getId());
+                                    }
+                                })
+                                .setCancelButton("Cancel", new SweetAlertDialog.OnSweetClickListener() {
+                                    @Override
+                                    public void onClick(SweetAlertDialog sDialog) {
+                                        sDialog.dismissWithAnimation();
+                                    }
+                                })
+                                .show();
+                    }
+                });
+
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressbar.setVisibility(View.GONE);
+            }
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String>params = new HashMap<>();
+                params.put("username",SharedPrefManager.getInstance(MainActivity.this).getKeyUserName());
+                return params;
+            }
+        };
+        RequestHandler.getInstance(MainActivity.this).addToRequestQueue(stringRequest);
+    }
+    private void delete_sale(final String id)
+    {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, RestApi.DELETE_SALE, response -> {
+            try {
+                JSONObject obj = new JSONObject(response);
+                if(!obj.getBoolean("error"))
+                {
+                    loadRecyclerView();
+                }
+                else
+                {
+
+                }
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String>params = new HashMap<>();
+                params.put("id",id);
+                return params;
+            }
+        };
+        RequestHandler.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
     }
 
     private void summary()
@@ -176,6 +296,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else if (id == R.id.nav_buy) {
             Intent i = new Intent(getApplicationContext(), BuyActivity.class);
             startActivity(i);
+        }
+        else if(id == R.id.nav_logout)
+        {
+            SharedPrefManager.getInstance(getApplicationContext()).logout();
+            Intent intent = new Intent(MainActivity.this, LoadingActivity.class);
+            startActivity(intent);
+            finish();
         }
 
 
